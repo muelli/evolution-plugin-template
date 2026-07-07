@@ -51,10 +51,9 @@ unsafe fn get_private(obj: *mut ffi::GObject) -> &'static mut Private {
 }
 
 // ── UI XML strings ────────────────────────────────────────────────────────────
-
-/// Concatenates string literal pieces and appends a NUL terminator.
-/// `gtk_ui_manager_add_ui_from_string` with `length = -1` requires a
-/// NUL-terminated string.
+//
+// Each string is NUL-terminated so it can be passed to
+// `gtk_ui_manager_add_ui_from_string` with `length = -1`.
 
 const MAIL_UI_DEF: &str = "\
 <menubar name='main-menu'>\

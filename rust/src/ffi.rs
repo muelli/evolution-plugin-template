@@ -13,7 +13,16 @@ use std::os::raw::{c_char, c_int, c_uint, c_ulong, c_void};
 // ── Basic GLib types ──────────────────────────────────────────────────────────
 
 /// `GType` — a pointer-sized integer that uniquely identifies a GObject type.
+///
+/// GLib defines `GType` as `gsize`, which is pointer-sized. This crate targets
+/// 64-bit Linux only; a compile-time assertion below enforces that.
 pub type GType = usize;
+
+// Fail to compile on anything other than a 64-bit target.
+const _: () = assert!(
+    std::mem::size_of::<usize>() == 8,
+    "GType is assumed to be 8 bytes (64-bit platforms only)"
+);
 
 /// `gboolean` — GLib boolean (C `int`; 0 = false, non-zero = true).
 pub type GBoolean = c_int;
